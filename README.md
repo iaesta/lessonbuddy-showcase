@@ -1,34 +1,68 @@
 # LessonBuddy Showcase
 
-A public, sanitised portfolio edition of **LessonBuddy**: an EdTech prototype that turns a teacher's learner profile and lesson goal into a structured ESL class plan and printable worksheet specification.
+A public, sanitised portfolio edition of **LessonBuddy**: an EdTech system that turns a teacher's learner profile and lesson focus into a structured ESL class plan and printable worksheet specification.
 
-> This repository is a portfolio snapshot. Proprietary prompts, commercial planning, credentials, private user data, and production-only logic are intentionally excluded.
+> This repository demonstrates architecture, validation, API design, automated testing, and product thinking. Proprietary prompts, credentials, commercial planning, private user data, and production-only logic remain in a private repository.
 
-## What this project demonstrates
+## Current milestone
+
+As of **3 July 2026**, the private product has completed its first working end-to-end local generation flow:
+
+1. A teacher submits the learner profile, lesson focus, target language, and duration.
+2. Gemini proposes the lesson objective, timed class flow, and worksheet-page plan.
+3. Buddy validates learner compatibility, timing, page density, activity variety, and requested practice modes.
+4. Buddy repairs deterministic issues and allows one constrained Gemini repair attempt when needed.
+5. Gemini generates the approved exercises.
+6. Buddy normalises and validates every assembled activity before publication.
+7. The app renders a teacher guide, page-by-page scripts and answers, and student worksheets.
+
+The current private build is **Buddy 0.4.6.3** with **76 automated tests passing**.
+
+The remaining high-priority issue is print pagination: an activity can currently exceed the printable A4 height and be clipped instead of flowing onto an additional page. This limitation is documented rather than hidden, and measured page fitting is the next engineering milestone.
+
+## System workflow
+
+```text
+Teacher brief
+      ↓
+Gemini lesson planning
+      ↓
+Buddy plan validation + deterministic repair
+      ↓
+Teacher approval
+      ↓
+Gemini exercise generation
+      ↓
+Buddy semantic + learner-profile validation
+      ↓
+Teacher guide + answer key + student worksheets
+```
+
+## What the project demonstrates
 
 - **Python + FastAPI** API design
 - **Pydantic** request validation and typed domain models
-- learner-profile compatibility rules
-- deterministic demo generation for reliable testing
-- output validation before presenting generated material
-- a small **HTML/CSS/JavaScript** frontend
-- automated tests and GitHub Actions CI
-- product thinking informed by real ESL teaching experience
+- learner-profile compatibility rules that keep reading, writing, and pencil control separate
+- two-stage AI generation with an approved plan locked before exercise generation
+- deterministic repair before spending an additional model call
+- semantic checks for instructions, word order, duplicate options, answers, and response demands
+- page-density, practice-time, progression, variety, and reserve-work rules
+- framework-free **HTML/CSS/JavaScript** frontend work
+- automated regression tests and GitHub Actions CI
+- QA-led development informed by real ESL classroom needs
 
-## Why I built it
+## Public demo status
 
-Teachers often spend significant unpaid time adapting materials for age, reading ability, writing ability, pencil control, class duration, and support needs. LessonBuddy explores how structured software and AI-assisted generation can reduce that preparation time without ignoring pedagogical constraints.
+This public repository intentionally runs in **deterministic demo mode**. It remains usable without an API key and shows the request, compatibility, planning, generation, and validation boundaries in a safe and reproducible form.
 
-## Current public-demo status
+The private product now contains a functioning Gemini-assisted flow. That provider adapter, its proprietary prompts, and the full commercial rule set are deliberately excluded from this public edition.
 
-The public edition runs in **deterministic demo mode** and is fully testable without an API key. The private product repository also explores Gemini-assisted generation; that integration is still being stabilised and is deliberately not presented here as production-ready.
-
-## API flow
+## API flow in this showcase
 
 1. Submit a learner and lesson profile.
-2. Receive a quick review with the interpreted plan and compatibility warnings.
+2. Receive a quick review with compatibility warnings.
 3. Generate a deterministic sample pack.
-4. Validate the flow, worksheet activities, and answer coverage.
+4. Validate timing, worksheet activities, and answer coverage.
 
 ## Quick start
 
@@ -70,17 +104,17 @@ pytest -q
 
 ```text
 app/
-  main.py              FastAPI routes
-  models.py            Typed request and output models
-  compatibility.py     Learner-profile rules
-  demo_generator.py    Deterministic generation and validation
+  main.py               FastAPI routes
+  models.py             Typed request and output models
+  compatibility.py      Learner-profile rules
+  demo_generator.py     Deterministic generation and validation
   static/               Small browser interface
-tests/                  API and rule tests
-docs/                   Architecture and project-status notes
-examples/               Sample request and response
+tests/                   API and compatibility tests
+docs/                    Architecture, current status, and roadmap
+examples/                Sample request and response
 ```
 
-## Roles this project supports
+## Portfolio relevance
 
 This project is relevant to junior or hybrid roles involving:
 
