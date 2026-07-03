@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LessonBuddy Showcase</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">Portfolio edition</p>
+      <h1>LessonBuddy Showcase</h1>
+      <p>Structured ESL lesson planning with compatibility checks and validated demo output.</p>
+    </header>
+
+    <section class="notice">
+      This public version uses deterministic demo generation. No external AI key is required.
+    </section>
+
+    <form id="lessonForm" class="card grid">
+      <label>Topic<input id="topic" value="Phonics: sh and ch" required></label>
+      <label>Target words<input id="targetWords" value="ship, shoe, chair, cheese" required></label>
+      <label>Minimum age<input id="ageMin" type="number" min="2" max="18" value="6"></label>
+      <label>Maximum age<input id="ageMax" type="number" min="2" max="18" value="8"></label>
+      <label>Level
+        <select id="level"><option>Pre-A1</option><option>A1</option><option>A2</option><option>B1</option></select>
+      </label>
+      <label>Reading stage
+        <select id="reading"><option value="pre_reader">Pre-reader</option><option value="word">Word</option><option value="sentence">Sentence</option></select>
+      </label>
+      <label>Writing stage
+        <select id="writing"><option value="no_latin_writing">No Latin writing</option><option value="trace_latin_letters">Trace letters</option><option value="copy_words">Copy words</option><option value="write_words">Write words</option></select>
+      </label>
+      <label>Duration
+        <select id="duration"><option>20</option><option>30</option><option selected>40</option><option>60</option><option>90</option><option>120</option></select>
+      </label>
+      <label class="wide">Teacher request<textarea id="request">Create a visual sound-discrimination lesson with no independent reading.</textarea></label>
+      <div class="actions wide">
+        <button type="submit">Review plan</button>
+        <button id="generate" type="button" class="secondary">Generate demo pack</button>
+      </div>
+    </form>
+
+    <section id="output" class="card output" aria-live="polite">
+      <p>Submit the form to inspect the structured output.</p>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

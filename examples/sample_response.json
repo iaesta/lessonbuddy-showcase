@@ -1,0 +1,39 @@
+{
+  "engine": "deterministic-portfolio-demo",
+  "document": {
+    "title": "Phonics: sh and ch",
+    "learner_summary": "Ages 6–8; Pre-A1; reading=pre_reader; writing=no_latin_writing.",
+    "class_flow": [
+      {
+        "start_minute": 0,
+        "end_minute": 6,
+        "stage": "Warm-up"
+      },
+      {
+        "start_minute": 6,
+        "end_minute": 14,
+        "stage": "Presentation"
+      },
+      {
+        "start_minute": 14,
+        "end_minute": 24,
+        "stage": "Guided practice"
+      },
+      {
+        "start_minute": 24,
+        "end_minute": 34,
+        "stage": "Student pages"
+      },
+      {
+        "start_minute": 34,
+        "end_minute": 40,
+        "stage": "Review and close"
+      }
+    ],
+    "worksheet_count": 2,
+    "answer_key_entries": 2
+  },
+  "validation": {
+    "valid": true
+  }
+}

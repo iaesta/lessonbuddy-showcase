@@ -1,0 +1,22 @@
+{
+  "topic": "Phonics: sh and ch",
+  "primary_skill": "phonics",
+  "target_words": [
+    "ship",
+    "shoe",
+    "chair",
+    "cheese"
+  ],
+  "age_min": 6,
+  "age_max": 8,
+  "level_label": "Pre-A1",
+  "reading_stage": "pre_reader",
+  "latin_writing_stage": "no_latin_writing",
+  "pencil_control": "age_appropriate",
+  "student_count": 8,
+  "session_duration_minutes": 40,
+  "support_needs": [
+    "visual_support"
+  ],
+  "teacher_request": "Create a visual sound-discrimination lesson with no independent reading."
+}
