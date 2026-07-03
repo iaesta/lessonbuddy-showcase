@@ -94,3 +94,9 @@ This project is relevant to junior or hybrid roles involving:
 ## Author
 
 **Jessica Ariza Gomez** — ESL educator, former QA professional, and independent developer.
+
+## Copyright and permitted use
+
+**Copyright © 2026 Jessica Ariza Gomez. All rights reserved.**
+
+This repository is provided solely for portfolio review, recruitment, and professional evaluation. No permission is granted to reproduce, redistribute, publish, sublicense, create derivative commercial products from, or use this code or its materials commercially without prior written permission from the copyright holder.
