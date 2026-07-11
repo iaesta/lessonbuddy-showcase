@@ -28,10 +28,18 @@ PencilControl = Literal[
     "age_appropriate",
 ]
 SessionDuration = Literal[20, 30, 40, 45, 60, 75, 90, 120]
-PrimarySkill = Literal["phonics", "vocabulary"]
+PrimarySkill = Literal["phonics", "vocabulary", "grammar", "custom"]
+ActivitySection = Literal["core", "extra"]
+ActivityType = Literal[
+    "picture_choice",
+    "complete_word",
+    "write_word",
+    "sort",
+]
 
 
 class LessonFlowStage(BaseModel):
+    stage_id: str = Field(pattern=r"^demo_stage_[a-z0-9_]+$")
     start_minute: int = Field(ge=0)
     end_minute: int = Field(gt=0)
     stage: str = Field(min_length=1, max_length=80)
@@ -47,25 +55,21 @@ class LessonFlowStage(BaseModel):
 
 
 class WorksheetRequest(BaseModel):
-    topic: str = Field(default="Phonics: sh and ch", min_length=3, max_length=120)
-    primary_skill: PrimarySkill = "phonics"
+    topic: str = Field(default="Animals at the zoo", min_length=3, max_length=120)
+    primary_skill: PrimarySkill = "vocabulary"
     target_words: list[str] = Field(
-        default_factory=lambda: ["ship", "shoe", "chair", "cheese"]
+        default_factory=lambda: ["lion", "monkey", "elephant", "giraffe"]
     )
     age_min: int = Field(default=6, ge=2, le=18)
     age_max: int = Field(default=8, ge=2, le=18)
-    level_label: EnglishLevel = "Pre-A1"
-    reading_stage: ReadingStage = "pre_reader"
-    latin_writing_stage: LatinWritingStage = "no_latin_writing"
+    level_label: EnglishLevel = "A1"
+    reading_stage: ReadingStage = "word"
+    latin_writing_stage: LatinWritingStage = "write_words"
     pencil_control: PencilControl = "age_appropriate"
     student_count: int = Field(default=8, ge=1, le=60)
     session_duration_minutes: SessionDuration = 40
     support_needs: list[str] = Field(default_factory=lambda: ["visual_support"])
-    teacher_request: str = Field(
-        default="Create a clear visual lesson with no ambiguous items.",
-        min_length=10,
-        max_length=800,
-    )
+    teacher_request: str = Field(default="", max_length=800)
 
     @model_validator(mode="after")
     def validate_request(self) -> "WorksheetRequest":
@@ -94,18 +98,30 @@ class CompatibilityResult(BaseModel):
     blocking_issues: list[str] = Field(default_factory=list)
 
 
+class WorksheetPlanPage(BaseModel):
+    page_number: int = Field(ge=1)
+    title: str
+    purpose: str
+    planned_activities: list[ActivityType]
+
+
 class QuickReview(BaseModel):
     title: str
+    lesson_goal: str
     interpretation: str
     worksheet_count: int
     session_duration_minutes: int
     progression: list[str]
     visual_plan: str
     class_flow: list[LessonFlowStage]
+    worksheet_plan: list[WorksheetPlanPage]
     compatibility: CompatibilityResult
 
 
 class Activity(BaseModel):
+    activity_id: str = Field(pattern=r"^demo_activity_[a-z0-9_]+$")
+    activity_type: ActivityType
+    section: ActivitySection
     instruction: str
     response_mode: str
     items: list[str]
@@ -115,7 +131,8 @@ class Activity(BaseModel):
 class WorksheetPage(BaseModel):
     page_number: int = Field(ge=1)
     title: str
-    estimated_minutes: int = Field(gt=0)
+    purpose: str
+    practice_minutes: int = Field(gt=0)
     activities: list[Activity]
 
 
@@ -137,3 +154,8 @@ class GenerationResponse(BaseModel):
     engine: str
     document: GeneratedPack
     validation: ValidationSummary
+
+
+class ApprovedGenerationRequest(BaseModel):
+    request: WorksheetRequest
+    approved_flow: list[LessonFlowStage]
