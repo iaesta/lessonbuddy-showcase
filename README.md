@@ -1,70 +1,53 @@
-# LessonBuddy Showcase
+# LessonBuddy Portfolio Showcase
 
-A public, sanitised portfolio edition of **LessonBuddy**: an EdTech system that turns a teacher's learner profile and lesson focus into a structured ESL class plan and printable worksheet specification.
+A polished, sanitised portfolio presentation of **LessonBuddy**, an EdTech project designed to help teachers turn learner profiles and lesson goals into structured ESL materials.
 
-> This repository demonstrates architecture, validation, API design, automated testing, and product thinking. Proprietary prompts, credentials, commercial planning, private user data, and production-only logic remain in a private repository.
+This repository is intentionally a **showcase, not the product**.
 
-## Current milestone
+It presents the problem, product thinking, engineering approach, QA mindset, and selected interface concepts without publishing the private generation system, prompts, provider integration, validation rules, storage, or production document logic.
 
-As of **3 July 2026**, the private product has completed its first working end-to-end local generation flow:
+## What this portfolio demonstrates
 
-1. A teacher submits the learner profile, lesson focus, target language, and duration.
-2. Gemini proposes the lesson objective, timed class flow, and worksheet-page plan.
-3. Buddy validates learner compatibility, timing, page density, activity variety, and requested practice modes.
-4. Buddy repairs deterministic issues and allows one constrained Gemini repair attempt when needed.
-5. Gemini generates the approved exercises.
-6. Buddy normalises and validates every assembled activity before publication.
-7. The app renders a teacher guide, page-by-page scripts and answers, and student worksheets.
+- product thinking grounded in real classroom needs;
+- FastAPI project structure;
+- typed public metadata with Pydantic;
+- a responsive HTML/CSS/JavaScript interface;
+- accessibility-conscious UI decisions;
+- clear separation between teacher and student views;
+- automated tests and GitHub Actions;
+- explicit protection of private product logic.
 
-The current private build is **Buddy 0.4.6.3** with **76 automated tests passing**.
+## Portfolio experience
 
-The remaining high-priority issue is print pagination: an activity can currently exceed the printable A4 height and be clipped instead of flowing onto an additional page. This limitation is documented rather than hidden, and measured page fitting is the next engineering milestone.
+The public site shows:
 
-## System workflow
+- the classroom problem LessonBuddy addresses;
+- a high-level workflow;
+- selected interface mock-ups;
+- engineering highlights;
+- QA and validation principles;
+- the public/private architecture boundary;
+- project status and transferable skills.
 
-```text
-Teacher brief
-      ↓
-Gemini lesson planning
-      ↓
-Buddy plan validation + deterministic repair
-      ↓
-Teacher approval
-      ↓
-Gemini exercise generation
-      ↓
-Buddy semantic + learner-profile validation
-      ↓
-Teacher guide + answer key + student worksheets
-```
+It does **not** accept lesson briefs or generate real materials.
 
-## What the project demonstrates
+## Public boundary
 
-- **Python + FastAPI** API design
-- **Pydantic** request validation and typed domain models
-- learner-profile compatibility rules that keep reading, writing, and pencil control separate
-- two-stage AI generation with an approved plan locked before exercise generation
-- deterministic repair before spending an additional model call
-- semantic checks for instructions, word order, duplicate options, answers, and response demands
-- page-density, practice-time, progression, variety, and reserve-work rules
-- framework-free **HTML/CSS/JavaScript** frontend work
-- automated regression tests and GitHub Actions CI
-- QA-led development informed by real ESL classroom needs
+The following remain private:
 
-## Public demo status
+- AI provider code and credentials;
+- production prompts;
+- planning and generation bridges;
+- commercial blueprints;
+- detailed pedagogical QC rules;
+- repair strategies;
+- private storage and history;
+- production print assembly;
+- user and student data.
 
-This public repository intentionally runs in **deterministic demo mode**. It remains usable without an API key and shows the request, compatibility, planning, generation, and validation boundaries in a safe and reproducible form.
+The public app exposes only a small read-only project metadata endpoint for portfolio inspection.
 
-The private product now contains a functioning Gemini-assisted flow. That provider adapter, its proprietary prompts, and the full commercial rule set are deliberately excluded from this public edition.
-
-## API flow in this showcase
-
-1. Submit a learner and lesson profile.
-2. Receive a quick review with compatibility warnings.
-3. Generate a deterministic sample pack.
-4. Validate timing, worksheet activities, and answer coverage.
-
-## Quick start
+## Run locally
 
 ```bash
 python -m venv .venv
@@ -81,49 +64,27 @@ Run tests:
 pytest -q
 ```
 
-## Example request
+## Public API
 
-```json
-{
-  "topic": "Phonics: sh and ch",
-  "primary_skill": "phonics",
-  "target_words": ["ship", "shoe", "chair", "cheese"],
-  "age_min": 6,
-  "age_max": 8,
-  "level_label": "Pre-A1",
-  "reading_stage": "pre_reader",
-  "latin_writing_stage": "no_latin_writing",
-  "pencil_control": "age_appropriate",
-  "session_duration_minutes": 40,
-  "student_count": 8,
-  "teacher_request": "Create a visual sound-discrimination lesson with no independent reading."
-}
-```
+- `GET /api/health`
+- `GET /api/project-snapshot`
+
+Both endpoints return portfolio metadata only.
 
 ## Repository map
 
 ```text
 app/
-  main.py               FastAPI routes
-  models.py             Typed request and output models
-  compatibility.py      Learner-profile rules
-  demo_generator.py     Deterministic generation and validation
-  static/               Small browser interface
-tests/                   API and compatibility tests
-docs/                    Architecture, current status, and roadmap
-examples/                Sample request and response
+  main.py               Read-only FastAPI portfolio routes
+  models.py             Public metadata model
+  static/               Portfolio interface
+tests/
+  test_app.py           Route tests
+  test_public_boundary.py
+                        Safety guardrails
+docs/
+  PUBLIC-BOUNDARY.md     Public/private separation
 ```
-
-## Portfolio relevance
-
-This project is relevant to junior or hybrid roles involving:
-
-- QA and test automation
-- Python backend development
-- AI-output evaluation
-- EdTech product development
-- product operations
-- prompt and workflow design
 
 ## Author
 

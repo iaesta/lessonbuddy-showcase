@@ -3,49 +3,273 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LessonBuddy Showcase</title>
+  <meta name="description" content="LessonBuddy portfolio showcase by Jessica Ariza Gomez">
+  <title>LessonBuddy — Portfolio Showcase</title>
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <main class="shell">
-    <header>
-      <p class="eyebrow">Portfolio edition</p>
-      <h1>LessonBuddy Showcase</h1>
-      <p>Structured ESL lesson planning with compatibility checks and validated demo output.</p>
-    </header>
+  <main>
+    <section class="hero section-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">EdTech · QA · Product development</p>
+        <h1>LessonBuddy</h1>
+        <p class="lead">
+          A teacher-support product designed to turn learner profiles,
+          classroom constraints, and lesson goals into structured ESL materials.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#case-study">View case study</a>
+          <a class="button secondary" href="#engineering">Engineering highlights</a>
+        </div>
+        <p class="portfolio-note">
+          Portfolio presentation only. Production logic, prompts, provider code,
+          private data, and commercial rules are intentionally excluded.
+        </p>
+      </div>
 
-    <section class="notice">
-      This public version uses deterministic demo generation. No external AI key is required.
+      <div class="hero-visual" aria-label="LessonBuddy interface concept">
+        <div class="browser-frame">
+          <div class="browser-bar">
+            <span></span><span></span><span></span>
+            <div class="browser-address">lessonbuddy / review-plan</div>
+          </div>
+          <div class="browser-content">
+            <div class="mini-header">
+              <div>
+                <small>Teacher review</small>
+                <strong>Animals at the Zoo</strong>
+              </div>
+              <span class="status-pill">Validated</span>
+            </div>
+
+            <div class="mini-flow">
+              <div class="mini-stage">
+                <span>0–4</span>
+                <div><strong>Warm-up</strong><small>Oral model + gestures</small></div>
+              </div>
+              <div class="mini-stage active">
+                <span>4–10</span>
+                <div><strong>Presentation</strong><small>Visual vocabulary support</small></div>
+              </div>
+              <div class="mini-stage">
+                <span>10–18</span>
+                <div><strong>Guided practice</strong><small>Supported matching</small></div>
+              </div>
+              <div class="mini-stage protected">
+                <span>18–34</span>
+                <div><strong>Student pages</strong><small>Protected core stage</small></div>
+              </div>
+              <div class="mini-stage">
+                <span>34–40</span>
+                <div><strong>Review</strong><small>Final retrieval check</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="worksheet-preview">
+          <div class="worksheet-topline"></div>
+          <h3>Animals at the Zoo</h3>
+          <p>Look, complete, and review.</p>
+          <div class="worksheet-grid">
+            <div><span>🦁</span><strong>l_on</strong></div>
+            <div><span>🐒</span><strong>m_nkey</strong></div>
+            <div><span>🐘</span><strong>el_phant</strong></div>
+            <div><span>🦒</span><strong>g_raffe</strong></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <form id="lessonForm" class="card grid">
-      <label>Topic<input id="topic" value="Phonics: sh and ch" required></label>
-      <label>Target words<input id="targetWords" value="ship, shoe, chair, cheese" required></label>
-      <label>Minimum age<input id="ageMin" type="number" min="2" max="18" value="6"></label>
-      <label>Maximum age<input id="ageMax" type="number" min="2" max="18" value="8"></label>
-      <label>Level
-        <select id="level"><option>Pre-A1</option><option>A1</option><option>A2</option><option>B1</option></select>
-      </label>
-      <label>Reading stage
-        <select id="reading"><option value="pre_reader">Pre-reader</option><option value="word">Word</option><option value="sentence">Sentence</option></select>
-      </label>
-      <label>Writing stage
-        <select id="writing"><option value="no_latin_writing">No Latin writing</option><option value="trace_latin_letters">Trace letters</option><option value="copy_words">Copy words</option><option value="write_words">Write words</option></select>
-      </label>
-      <label>Duration
-        <select id="duration"><option>20</option><option>30</option><option selected>40</option><option>60</option><option>90</option><option>120</option></select>
-      </label>
-      <label class="wide">Teacher request<textarea id="request">Create a visual sound-discrimination lesson with no independent reading.</textarea></label>
-      <div class="actions wide">
-        <button type="submit">Review plan</button>
-        <button id="generate" type="button" class="secondary">Generate demo pack</button>
+    <section class="metric-strip">
+      <div class="section-shell metrics">
+        <div><strong>Teacher-first</strong><span>Built around real classroom workflows</span></div>
+        <div><strong>QA-led</strong><span>Validation before publication</span></div>
+        <div><strong>Learner-safe</strong><span>Reading, writing, and support needs separated</span></div>
+        <div><strong>Private by design</strong><span>Commercial logic remains protected</span></div>
       </div>
-    </form>
+    </section>
 
-    <section id="output" class="card output" aria-live="polite">
-      <p>Submit the form to inspect the structured output.</p>
+    <section id="case-study" class="section-shell content-section">
+      <div class="section-heading">
+        <p class="eyebrow">Case study</p>
+        <h2>From classroom frustration to structured product thinking</h2>
+      </div>
+
+      <div class="story-grid">
+        <article class="story-card">
+          <span class="story-number">01</span>
+          <h3>The problem</h3>
+          <p>
+            Teachers spend significant unpaid time adapting activities for age,
+            English level, reading ability, writing ability, pencil control,
+            lesson length, and individual support needs.
+          </p>
+        </article>
+
+        <article class="story-card accent-cyan">
+          <span class="story-number">02</span>
+          <h3>The product idea</h3>
+          <p>
+            LessonBuddy turns those constraints into an explicit brief,
+            proposes a timed lesson structure, and separates teacher guidance
+            from student-facing materials.
+          </p>
+        </article>
+
+        <article class="story-card accent-yellow">
+          <span class="story-number">03</span>
+          <h3>The quality approach</h3>
+          <p>
+            Generated output is not treated as correct by default. The system
+            is designed around validation, repair, teacher review, and regression
+            testing before materials are considered publishable.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="workflow-section">
+      <div class="section-shell content-section">
+        <div class="section-heading centered">
+          <p class="eyebrow">High-level workflow</p>
+          <h2>Human approval stays inside the loop</h2>
+          <p class="section-intro">
+            The portfolio shows the product architecture at a conceptual level
+            without publishing the private implementation.
+          </p>
+        </div>
+
+        <div class="workflow">
+          <div class="workflow-step">
+            <span>1</span>
+            <strong>Teacher brief</strong>
+            <small>Learner profile, lesson goal, timing, constraints</small>
+          </div>
+          <div class="workflow-arrow">→</div>
+          <div class="workflow-step">
+            <span>2</span>
+            <strong>Structured plan</strong>
+            <small>Timed flow and worksheet intent</small>
+          </div>
+          <div class="workflow-arrow">→</div>
+          <div class="workflow-step emphasis">
+            <span>3</span>
+            <strong>Teacher review</strong>
+            <small>Edit, approve, or reject before generation</small>
+          </div>
+          <div class="workflow-arrow">→</div>
+          <div class="workflow-step">
+            <span>4</span>
+            <strong>Validated output</strong>
+            <small>Teacher guide and student-ready pages</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="engineering" class="section-shell content-section">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering</p>
+        <h2>What this project demonstrates</h2>
+      </div>
+
+      <div id="engineeringGrid" class="feature-grid" aria-live="polite">
+        <article class="feature-card">
+          <div class="feature-icon">API</div>
+          <h3>Typed backend contracts</h3>
+          <p>FastAPI and Pydantic are used to keep public interfaces explicit and testable.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">QA</div>
+          <h3>Regression-driven development</h3>
+          <p>Known failures become tests so fixes remain stable as the product evolves.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">UX</div>
+          <h3>Teacher-first interaction</h3>
+          <p>The workflow prioritises review, clarity, print usability, and classroom speed.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">A11Y</div>
+          <h3>Learner-aware design</h3>
+          <p>Reading, writing, spacing, and support needs are treated as separate constraints.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="qa-section">
+      <div class="section-shell qa-layout">
+        <div>
+          <p class="eyebrow">QA mindset</p>
+          <h2>AI output is a test subject, not a source of truth</h2>
+          <p>
+            My QA background shapes the product: define contracts, identify failure modes,
+            validate outputs, preserve regressions as tests, and keep the teacher in control.
+          </p>
+        </div>
+
+        <div id="qaList" class="qa-list">
+          <div><span>✓</span> Validate structure before presentation</div>
+          <div><span>✓</span> Separate learner constraints explicitly</div>
+          <div><span>✓</span> Preserve teacher approval before final output</div>
+          <div><span>✓</span> Test print and classroom usability</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell content-section boundary-section">
+      <div class="boundary-card public-side">
+        <p class="eyebrow">Public portfolio</p>
+        <h3>What recruiters can inspect</h3>
+        <ul>
+          <li>Product story and design decisions</li>
+          <li>Read-only FastAPI structure</li>
+          <li>Responsive frontend implementation</li>
+          <li>Automated tests and CI</li>
+          <li>Explicit privacy and IP boundaries</li>
+        </ul>
+      </div>
+
+      <div class="boundary-divider">Protected boundary</div>
+
+      <div class="boundary-card private-side">
+        <p class="eyebrow">Private product</p>
+        <h3>What remains protected</h3>
+        <ul id="privateList">
+          <li>Provider integration and credentials</li>
+          <li>Prompts and generation strategy</li>
+          <li>Detailed pedagogical rules</li>
+          <li>Private storage and production assembly</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section-shell final-cta">
+      <p class="eyebrow">Portfolio project by Jessica Ariza Gomez</p>
+      <h2>Education experience, QA thinking, and product development in one project.</h2>
+      <p>
+        LessonBuddy demonstrates how I translate real operational problems into
+        structured software, testable workflows, and user-centred product decisions.
+      </p>
+      <div class="tag-row">
+        <span>FastAPI</span>
+        <span>Pydantic</span>
+        <span>JavaScript</span>
+        <span>Automated testing</span>
+        <span>EdTech</span>
+        <span>QA</span>
+      </div>
     </section>
   </main>
+
+  <footer>
+    <div class="section-shell footer-content">
+      <span>© 2026 Jessica Ariza Gomez</span>
+      <span id="versionLabel">Portfolio edition</span>
+    </div>
+  </footer>
+
   <script src="/static/app.js"></script>
 </body>
 </html>

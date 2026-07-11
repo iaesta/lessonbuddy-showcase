@@ -1,50 +1,55 @@
-const form = document.getElementById('lessonForm');
-const output = document.getElementById('output');
-const generateButton = document.getElementById('generate');
-
-function payload() {
-  return {
-    topic: document.getElementById('topic').value,
-    primary_skill: 'phonics',
-    target_words: document.getElementById('targetWords').value.split(',').map(v => v.trim()).filter(Boolean),
-    age_min: Number(document.getElementById('ageMin').value),
-    age_max: Number(document.getElementById('ageMax').value),
-    level_label: document.getElementById('level').value,
-    reading_stage: document.getElementById('reading').value,
-    latin_writing_stage: document.getElementById('writing').value,
-    pencil_control: 'age_appropriate',
-    student_count: 8,
-    session_duration_minutes: Number(document.getElementById('duration').value),
-    support_needs: ['visual_support'],
-    teacher_request: document.getElementById('request').value
-  };
-}
-
-async function callApi(path) {
-  output.innerHTML = '<p>Working…</p>';
-  const response = await fetch(path, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload())
-  });
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.detail || 'Request failed');
-  output.innerHTML = `<pre>${escapeHtml(JSON.stringify(data, null, 2))}</pre>`;
-}
+const versionLabel = document.getElementById('versionLabel');
+const engineeringGrid = document.getElementById('engineeringGrid');
+const qaList = document.getElementById('qaList');
+const privateList = document.getElementById('privateList');
 
 function escapeHtml(value) {
-  return value.replace(/[&<>"']/g, character => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+  return String(value ?? '').replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
   })[character]);
 }
 
-form.addEventListener('submit', async event => {
-  event.preventDefault();
-  try { await callApi('/api/quick-review'); }
-  catch (error) { output.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`; }
-});
+function renderSnapshot(snapshot) {
+  versionLabel.textContent = snapshot.edition;
 
-generateButton.addEventListener('click', async () => {
-  try { await callApi('/api/generate'); }
-  catch (error) { output.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`; }
-});
+  engineeringGrid.innerHTML = snapshot.engineering_highlights.map((item, index) => `
+    <article class="feature-card">
+      <div class="feature-icon">${String(index + 1).padStart(2, '0')}</div>
+      <h3>${escapeHtml(item)}</h3>
+      <p>${escapeHtml(featureDescription(item))}</p>
+    </article>
+  `).join('');
+
+  qaList.innerHTML = snapshot.qa_principles.map(item => `
+    <div><span>✓</span>${escapeHtml(item)}</div>
+  `).join('');
+
+  privateList.innerHTML = snapshot.private_by_design.map(item => `
+    <li>${escapeHtml(item)}</li>
+  `).join('');
+}
+
+function featureDescription(item) {
+  const descriptions = {
+    'FastAPI and Pydantic architecture': 'Clear public contracts, typed responses, and a small read-only API surface.',
+    'Teacher-in-the-loop approval workflow': 'The product concept keeps professional judgement between planning and publication.',
+    'Separate teacher and student presentation layers': 'Internal guidance and student-facing materials are treated as different products.',
+    'Automated regression testing': 'Known failures are preserved as tests to prevent silent reintroduction.',
+    'Responsive, accessible frontend design': 'The interface prioritises readability, hierarchy, and practical use across devices.'
+  };
+  return descriptions[item] || 'A selected public highlight from the private product architecture.';
+}
+
+fetch('/api/project-snapshot')
+  .then(response => {
+    if (!response.ok) throw new Error('Portfolio metadata unavailable');
+    return response.json();
+  })
+  .then(renderSnapshot)
+  .catch(() => {
+    versionLabel.textContent = 'Portfolio edition';
+  });
