@@ -8,44 +8,182 @@
 </head>
 <body>
   <main class="shell">
-    <header>
-      <p class="eyebrow">Portfolio edition</p>
-      <h1>LessonBuddy Showcase</h1>
-      <p>Structured ESL lesson planning with compatibility checks and validated demo output.</p>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Public portfolio edition</p>
+        <h1>LessonBuddy Showcase</h1>
+        <p class="hero-copy">
+          A sanitised, deterministic demonstration of structured ESL planning,
+          teacher review, compatibility checks, and printable worksheet views.
+        </p>
+      </div>
+      <div class="version-card">
+        <span>Showcase version</span>
+        <strong id="versionLabel">1.1.0</strong>
+        <small>No external AI credentials</small>
+      </div>
     </header>
 
     <section class="notice">
-      This public version uses deterministic demo generation. No external AI key is required.
+      <strong>Safe public boundary:</strong>
+      this demo excludes production prompts, the Gemini provider adapter,
+      commercial validation rules, private storage, and user data.
     </section>
 
-    <form id="lessonForm" class="card grid">
-      <label>Topic<input id="topic" value="Phonics: sh and ch" required></label>
-      <label>Target words<input id="targetWords" value="ship, shoe, chair, cheese" required></label>
-      <label>Minimum age<input id="ageMin" type="number" min="2" max="18" value="6"></label>
-      <label>Maximum age<input id="ageMax" type="number" min="2" max="18" value="8"></label>
-      <label>Level
-        <select id="level"><option>Pre-A1</option><option>A1</option><option>A2</option><option>B1</option></select>
+    <form id="lessonForm" class="card form-grid">
+      <div class="section-heading wide">
+        <span>1</span>
+        <div>
+          <h2>Build a learner-safe brief</h2>
+          <p>The public demo uses deterministic sample generation.</p>
+        </div>
+      </div>
+
+      <label>
+        Lesson topic
+        <input id="topic" value="Animals at the zoo" required>
       </label>
-      <label>Reading stage
-        <select id="reading"><option value="pre_reader">Pre-reader</option><option value="word">Word</option><option value="sentence">Sentence</option></select>
+
+      <label>
+        Main skill
+        <select id="skill">
+          <option value="vocabulary" selected>Vocabulary</option>
+          <option value="phonics">Phonics</option>
+          <option value="grammar">Grammar</option>
+          <option value="custom">Something else</option>
+        </select>
       </label>
-      <label>Writing stage
-        <select id="writing"><option value="no_latin_writing">No Latin writing</option><option value="trace_latin_letters">Trace letters</option><option value="copy_words">Copy words</option><option value="write_words">Write words</option></select>
+
+      <label class="wide">
+        Target language
+        <input id="targetWords" value="lion, monkey, elephant, giraffe" required>
+        <small>Enter 2–8 items separated by commas.</small>
       </label>
-      <label>Duration
-        <select id="duration"><option>20</option><option>30</option><option selected>40</option><option>60</option><option>90</option><option>120</option></select>
+
+      <label>
+        Minimum age
+        <input id="ageMin" type="number" min="2" max="18" value="6">
       </label>
-      <label class="wide">Teacher request<textarea id="request">Create a visual sound-discrimination lesson with no independent reading.</textarea></label>
+
+      <label>
+        Maximum age
+        <input id="ageMax" type="number" min="2" max="18" value="8">
+      </label>
+
+      <label>
+        English level
+        <select id="level">
+          <option>Pre-A1</option>
+          <option selected>A1</option>
+          <option>A2</option>
+          <option>B1</option>
+          <option>B2</option>
+          <option>C1</option>
+        </select>
+      </label>
+
+      <label>
+        Reading stage
+        <select id="reading">
+          <option value="pre_reader">Pre-reader</option>
+          <option value="word" selected>Reads familiar words</option>
+          <option value="sentence">Reads sentences</option>
+          <option value="short_paragraph">Reads short paragraphs</option>
+          <option value="short_story">Reads short stories</option>
+        </select>
+      </label>
+
+      <label>
+        Writing stage
+        <select id="writing">
+          <option value="no_latin_writing">No Latin writing</option>
+          <option value="trace_latin_letters">Traces letters</option>
+          <option value="copy_latin_letters">Copies letters</option>
+          <option value="copy_words">Copies words</option>
+          <option value="write_words" selected>Writes words</option>
+          <option value="guided_sentences">Guided sentences</option>
+          <option value="independent_sentences">Independent sentences</option>
+          <option value="extended_writing">Extended writing</option>
+        </select>
+      </label>
+
+      <label>
+        Pencil control
+        <select id="pencil">
+          <option value="needs_large_spaces">Needs large spaces</option>
+          <option value="standard_marking">Standard marking</option>
+          <option value="age_appropriate" selected>Age appropriate</option>
+        </select>
+      </label>
+
+      <label>
+        Duration
+        <select id="duration">
+          <option>20</option>
+          <option>30</option>
+          <option selected>40</option>
+          <option>45</option>
+          <option>60</option>
+          <option>75</option>
+          <option>90</option>
+          <option>120</option>
+        </select>
+      </label>
+
+      <label class="wide">
+        Optional teacher note
+        <textarea id="request" placeholder="Example: keep the worksheet visual and suitable for mixed-speed learners."></textarea>
+      </label>
+
       <div class="actions wide">
-        <button type="submit">Review plan</button>
-        <button id="generate" type="button" class="secondary">Generate demo pack</button>
+        <button type="submit">Create review plan</button>
       </div>
     </form>
 
-    <section id="output" class="card output" aria-live="polite">
-      <p>Submit the form to inspect the structured output.</p>
+    <section id="planPanel" class="card hidden" aria-live="polite">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Teacher review</p>
+          <h2>Review the deterministic plan</h2>
+          <p>Edit, reorder, add, or remove demo stages before generation.</p>
+        </div>
+        <button id="addStage" type="button" class="secondary">Add stage</button>
+      </div>
+
+      <div id="planSummary" class="summary-grid"></div>
+      <div id="compatibility" class="compatibility"></div>
+      <div id="flowEditor" class="flow-editor"></div>
+
+      <div class="actions">
+        <button id="generateApproved" type="button">Generate approved demo pack</button>
+      </div>
+    </section>
+
+    <section id="resultPanel" class="card hidden">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Validated output</p>
+          <h2>Teacher and student views</h2>
+        </div>
+        <button id="printStudent" type="button" class="secondary">Print student pages</button>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" type="button" data-tab="teacher">Teacher guide</button>
+        <button class="tab" type="button" data-tab="student">Student pages</button>
+        <button class="tab" type="button" data-tab="data">Structured data</button>
+      </div>
+
+      <div id="teacherView" class="tab-panel"></div>
+      <div id="studentView" class="tab-panel hidden"></div>
+      <div id="dataView" class="tab-panel hidden"></div>
+    </section>
+
+    <section id="statusPanel" class="card status-card" aria-live="polite">
+      <p>Build a brief to inspect the public planning workflow.</p>
     </section>
   </main>
+
   <script src="/static/app.js"></script>
 </body>
 </html>
