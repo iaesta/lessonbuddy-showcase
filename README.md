@@ -1,73 +1,53 @@
-# LessonBuddy Showcase
+# LessonBuddy Portfolio Showcase
 
-A public, sanitised portfolio edition of **LessonBuddy**: an EdTech system that turns a teacher's learner profile and lesson focus into a structured ESL class plan and printable worksheet demonstration.
+A polished, sanitised portfolio presentation of **LessonBuddy**, an EdTech project designed to help teachers turn learner profiles and lesson goals into structured ESL materials.
 
-> This repository demonstrates architecture, validation, API design, automated testing, frontend work, and product thinking. Production prompts, credentials, provider adapters, commercial rules, private storage, and user data remain private.
+This repository is intentionally a **showcase, not the product**.
 
-## Current public milestone
+It presents the problem, product thinking, engineering approach, QA mindset, and selected interface concepts without publishing the private generation system, prompts, provider integration, validation rules, storage, or production document logic.
 
-The public showcase is now **v1.1.0-showcase**.
+## What this portfolio demonstrates
 
-It demonstrates a safe, deterministic version of the current product workflow:
+- product thinking grounded in real classroom needs;
+- FastAPI project structure;
+- typed public metadata with Pydantic;
+- a responsive HTML/CSS/JavaScript interface;
+- accessibility-conscious UI decisions;
+- clear separation between teacher and student views;
+- automated tests and GitHub Actions;
+- explicit protection of private product logic.
 
-1. A teacher submits a learner profile, lesson focus, target language, and duration.
-2. The API creates a typed review plan with stable demo stage IDs.
-3. The teacher can edit, reorder, add, or remove non-required stages in the browser.
-4. The required **Student pages** stage remains protected.
-5. The approved demo flow is submitted to a separate generation endpoint.
-6. The API produces a deterministic teacher guide, answer key, and student pages.
-7. Validation checks timing continuity, unique IDs, worksheet coverage, and activity variety.
-8. Student sheets omit internal `Core` / `Extra` labels while the teacher guide retains them.
-9. A print-specific A4 view is included without exposing the private production renderer.
+## Portfolio experience
 
-The private product contains the real AI provider integration, proprietary prompts, production planning bridges, full pedagogical QC, storage, and commercial document assembly. Those components are not copied into this repository.
+The public site shows:
 
-## Safe public boundary
+- the classroom problem LessonBuddy addresses;
+- a high-level workflow;
+- selected interface mock-ups;
+- engineering highlights;
+- QA and validation principles;
+- the public/private architecture boundary;
+- project status and transferable skills.
 
-This showcase intentionally excludes:
+It does **not** accept lesson briefs or generate real materials.
 
-- AI credentials and provider SDK integration
-- production prompt text
-- private two-stage planning and repair logic
-- commercial blueprint generation
-- the complete pedagogical validation rule set
-- private persistence and history
-- production document assembly internals
-- user or student data
+## Public boundary
 
-A regression test scans the public application for provider and production markers so those components are not added accidentally.
+The following remain private:
 
-## Public demo workflow
+- AI provider code and credentials;
+- production prompts;
+- planning and generation bridges;
+- commercial blueprints;
+- detailed pedagogical QC rules;
+- repair strategies;
+- private storage and history;
+- production print assembly;
+- user and student data.
 
-```text
-Teacher brief
-      ↓
-Deterministic review plan
-      ↓
-Teacher edits and approves the demo flow
-      ↓
-Deterministic sample generation
-      ↓
-Public validation boundary
-      ↓
-Teacher guide + student print view + structured JSON
-```
+The public app exposes only a small read-only project metadata endpoint for portfolio inspection.
 
-## What the project demonstrates
-
-- **Python + FastAPI** API design
-- **Pydantic** request validation and typed domain models
-- learner-profile compatibility rules that keep reading, writing, and pencil control separate
-- a teacher-in-the-loop review step
-- stable public demo IDs and approved-flow validation
-- deterministic generation for reliable testing
-- separate teacher and student rendering concerns
-- A4 print styling
-- framework-free **HTML/CSS/JavaScript**
-- automated regression tests and GitHub Actions CI
-- QA-led development informed by real ESL classroom needs
-
-## Quick start
+## Run locally
 
 ```bash
 python -m venv .venv
@@ -84,60 +64,27 @@ Run tests:
 pytest -q
 ```
 
-## API endpoints
+## Public API
 
-- `GET /api/health` — public version and safety boundary
-- `POST /api/quick-review` — deterministic typed review plan
-- `POST /api/generate` — backward-compatible deterministic generation
-- `POST /api/generate-approved` — generation from a teacher-approved demo flow
+- `GET /api/health`
+- `GET /api/project-snapshot`
 
-## Example request
-
-```json
-{
-  "topic": "Animals at the zoo",
-  "primary_skill": "vocabulary",
-  "target_words": ["lion", "monkey", "elephant", "giraffe"],
-  "age_min": 6,
-  "age_max": 8,
-  "level_label": "A1",
-  "reading_stage": "word",
-  "latin_writing_stage": "write_words",
-  "pencil_control": "age_appropriate",
-  "session_duration_minutes": 40,
-  "student_count": 8,
-  "teacher_request": ""
-}
-```
+Both endpoints return portfolio metadata only.
 
 ## Repository map
 
 ```text
 app/
-  main.py               FastAPI routes
-  models.py             Typed request, review, and output models
-  compatibility.py      Learner-profile rules
-  demo_generator.py     Deterministic public generation and validation
-  static/               Browser interface and print view
+  main.py               Read-only FastAPI portfolio routes
+  models.py             Public metadata model
+  static/               Portfolio interface
 tests/
-  test_app.py           API and approved-flow tests
-  test_compatibility.py Learner-profile tests
+  test_app.py           Route tests
   test_public_boundary.py
+                        Safety guardrails
 docs/
-  PUBLIC-BOUNDARY.md     Explicit private/public separation
+  PUBLIC-BOUNDARY.md     Public/private separation
 ```
-
-## Portfolio relevance
-
-This project is relevant to junior or hybrid roles involving:
-
-- QA and test automation
-- Python backend development
-- AI-output evaluation
-- EdTech product development
-- product operations
-- frontend implementation
-- prompt and workflow design
 
 ## Author
 
