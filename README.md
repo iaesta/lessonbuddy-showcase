@@ -1,41 +1,56 @@
 # LessonBuddy Showcase
 
-A public, sanitised portfolio edition of **LessonBuddy**: an EdTech system that turns a teacher's learner profile and lesson focus into a structured ESL class plan and printable worksheet specification.
+A public, sanitised portfolio edition of **LessonBuddy**: an EdTech system that turns a teacher's learner profile and lesson focus into a structured ESL class plan and printable worksheet demonstration.
 
-> This repository demonstrates architecture, validation, API design, automated testing, and product thinking. Proprietary prompts, credentials, commercial planning, private user data, and production-only logic remain in a private repository.
+> This repository demonstrates architecture, validation, API design, automated testing, frontend work, and product thinking. Production prompts, credentials, provider adapters, commercial rules, private storage, and user data remain private.
 
-## Current milestone
+## Current public milestone
 
-As of **3 July 2026**, the private product has completed its first working end-to-end local generation flow:
+The public showcase is now **v1.1.0-showcase**.
 
-1. A teacher submits the learner profile, lesson focus, target language, and duration.
-2. Gemini proposes the lesson objective, timed class flow, and worksheet-page plan.
-3. Buddy validates learner compatibility, timing, page density, activity variety, and requested practice modes.
-4. Buddy repairs deterministic issues and allows one constrained Gemini repair attempt when needed.
-5. Gemini generates the approved exercises.
-6. Buddy normalises and validates every assembled activity before publication.
-7. The app renders a teacher guide, page-by-page scripts and answers, and student worksheets.
+It demonstrates a safe, deterministic version of the current product workflow:
 
-The current private build is **Buddy 0.4.6.3** with **76 automated tests passing**.
+1. A teacher submits a learner profile, lesson focus, target language, and duration.
+2. The API creates a typed review plan with stable demo stage IDs.
+3. The teacher can edit, reorder, add, or remove non-required stages in the browser.
+4. The required **Student pages** stage remains protected.
+5. The approved demo flow is submitted to a separate generation endpoint.
+6. The API produces a deterministic teacher guide, answer key, and student pages.
+7. Validation checks timing continuity, unique IDs, worksheet coverage, and activity variety.
+8. Student sheets omit internal `Core` / `Extra` labels while the teacher guide retains them.
+9. A print-specific A4 view is included without exposing the private production renderer.
 
-The remaining high-priority issue is print pagination: an activity can currently exceed the printable A4 height and be clipped instead of flowing onto an additional page. This limitation is documented rather than hidden, and measured page fitting is the next engineering milestone.
+The private product contains the real AI provider integration, proprietary prompts, production planning bridges, full pedagogical QC, storage, and commercial document assembly. Those components are not copied into this repository.
 
-## System workflow
+## Safe public boundary
+
+This showcase intentionally excludes:
+
+- AI credentials and provider SDK integration
+- production prompt text
+- private two-stage planning and repair logic
+- commercial blueprint generation
+- the complete pedagogical validation rule set
+- private persistence and history
+- production document assembly internals
+- user or student data
+
+A regression test scans the public application for provider and production markers so those components are not added accidentally.
+
+## Public demo workflow
 
 ```text
 Teacher brief
       ↓
-Gemini lesson planning
+Deterministic review plan
       ↓
-Buddy plan validation + deterministic repair
+Teacher edits and approves the demo flow
       ↓
-Teacher approval
+Deterministic sample generation
       ↓
-Gemini exercise generation
+Public validation boundary
       ↓
-Buddy semantic + learner-profile validation
-      ↓
-Teacher guide + answer key + student worksheets
+Teacher guide + student print view + structured JSON
 ```
 
 ## What the project demonstrates
@@ -43,26 +58,14 @@ Teacher guide + answer key + student worksheets
 - **Python + FastAPI** API design
 - **Pydantic** request validation and typed domain models
 - learner-profile compatibility rules that keep reading, writing, and pencil control separate
-- two-stage AI generation with an approved plan locked before exercise generation
-- deterministic repair before spending an additional model call
-- semantic checks for instructions, word order, duplicate options, answers, and response demands
-- page-density, practice-time, progression, variety, and reserve-work rules
-- framework-free **HTML/CSS/JavaScript** frontend work
+- a teacher-in-the-loop review step
+- stable public demo IDs and approved-flow validation
+- deterministic generation for reliable testing
+- separate teacher and student rendering concerns
+- A4 print styling
+- framework-free **HTML/CSS/JavaScript**
 - automated regression tests and GitHub Actions CI
 - QA-led development informed by real ESL classroom needs
-
-## Public demo status
-
-This public repository intentionally runs in **deterministic demo mode**. It remains usable without an API key and shows the request, compatibility, planning, generation, and validation boundaries in a safe and reproducible form.
-
-The private product now contains a functioning Gemini-assisted flow. That provider adapter, its proprietary prompts, and the full commercial rule set are deliberately excluded from this public edition.
-
-## API flow in this showcase
-
-1. Submit a learner and lesson profile.
-2. Receive a quick review with compatibility warnings.
-3. Generate a deterministic sample pack.
-4. Validate timing, worksheet activities, and answer coverage.
 
 ## Quick start
 
@@ -81,22 +84,29 @@ Run tests:
 pytest -q
 ```
 
+## API endpoints
+
+- `GET /api/health` — public version and safety boundary
+- `POST /api/quick-review` — deterministic typed review plan
+- `POST /api/generate` — backward-compatible deterministic generation
+- `POST /api/generate-approved` — generation from a teacher-approved demo flow
+
 ## Example request
 
 ```json
 {
-  "topic": "Phonics: sh and ch",
-  "primary_skill": "phonics",
-  "target_words": ["ship", "shoe", "chair", "cheese"],
+  "topic": "Animals at the zoo",
+  "primary_skill": "vocabulary",
+  "target_words": ["lion", "monkey", "elephant", "giraffe"],
   "age_min": 6,
   "age_max": 8,
-  "level_label": "Pre-A1",
-  "reading_stage": "pre_reader",
-  "latin_writing_stage": "no_latin_writing",
+  "level_label": "A1",
+  "reading_stage": "word",
+  "latin_writing_stage": "write_words",
   "pencil_control": "age_appropriate",
   "session_duration_minutes": 40,
   "student_count": 8,
-  "teacher_request": "Create a visual sound-discrimination lesson with no independent reading."
+  "teacher_request": ""
 }
 ```
 
@@ -105,13 +115,16 @@ pytest -q
 ```text
 app/
   main.py               FastAPI routes
-  models.py             Typed request and output models
+  models.py             Typed request, review, and output models
   compatibility.py      Learner-profile rules
-  demo_generator.py     Deterministic generation and validation
-  static/               Small browser interface
-tests/                   API and compatibility tests
-docs/                    Architecture, current status, and roadmap
-examples/                Sample request and response
+  demo_generator.py     Deterministic public generation and validation
+  static/               Browser interface and print view
+tests/
+  test_app.py           API and approved-flow tests
+  test_compatibility.py Learner-profile tests
+  test_public_boundary.py
+docs/
+  PUBLIC-BOUNDARY.md     Explicit private/public separation
 ```
 
 ## Portfolio relevance
@@ -123,6 +136,7 @@ This project is relevant to junior or hybrid roles involving:
 - AI-output evaluation
 - EdTech product development
 - product operations
+- frontend implementation
 - prompt and workflow design
 
 ## Author
